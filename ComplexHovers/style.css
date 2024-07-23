@@ -1,0 +1,94 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+main {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #000000da;
+}
+
+.list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.3em;
+}
+
+.item {
+  width: 86px;
+  height: 150px;
+}
+
+.item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* From HEre the Video CSS Starts */
+
+/* define how items should be in 3d space  */
+.list {
+  transform-style: preserve-3d;
+  transform: perspective(1000px);
+}
+
+.list .item {
+  transition: 0.5s;
+  filter: brightness(0);
+}
+
+.list .item:hover {
+  filter: brightness(1);
+  transform: translateZ(200px);
+}
+
+/* + means signifies the adjecent sibling to the right */
+/* .list .item:hover + .item {
+  filter: brightness(0.6);
+} */
+
+/* we can also not necessarly need to mention the class we can just put * it means what ever the adject sibling item is */
+.list .item:hover + * {
+  filter: brightness(0.6);
+  transform: translateZ(150px) rotateY(40deg);
+}
+
+/* next to next sibling this means  */
+.list .item:hover + * + * {
+  filter: brightness(0.4);
+  transform: translateZ(70px) rotateY(20deg);
+}
+
+.list .item:hover + * + * + * {
+  filter: brightness(0.2);
+  transform: translateZ(30px) rotateY(10deg);
+}
+
+/* But there is no selector which can target the left of the hovered item  */
+
+/* And hence we use has */
+
+/* This means that target the item whose next item is being hovered --> which means left of the hovered item */
+.list .item:has(+ *:hover) {
+  filter: brightness(0.6);
+  transform: translateZ(150px) rotateY(-40deg);
+}
+
+.list .item:has(+ * + *:hover) {
+  filter: brightness(0.4);
+  transform: translateZ(70px) rotateY(-20deg);
+}
+
+.list .item:has(+ * + * + *:hover) {
+  filter: brightness(0.2);
+  transform: translateZ(30px) rotateY(-10deg);
+}
+
+/* Just remember the combination of + * signifies the right item but when combined with has it signifies the left sibling item */
